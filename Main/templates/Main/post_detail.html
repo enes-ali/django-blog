@@ -1,0 +1,120 @@
+{% extends "Main/base.html" %}
+{% load static %}
+
+{% block title %}{{post.title}}{% endblock %}
+
+{% block head %} 
+    <link rel="stylesheet" href="{% static 'Main/css/post_detail.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div id="post">
+        <h1 id="post-title">{{post.title}}</h1>
+        
+        <div id="post-info">
+            <span id="post-upload-date">{{post.upload_date}}</span>
+            <span id="post-category" class="label category-{{post.category}}">{{post.get_category_display}}</span>
+        </div>
+
+        <img src="{{ post.cover_photo.url }}" alt="" id="post-cover-photo">
+
+        <div id="post-content">{{post.content|safe}}</div>
+
+        <div id="post-owner-container">
+            <img src="{{ post.owner.profile_photo.url }}" alt="" id="profile-photo">
+            <div>
+                <p id="username">{{ request.user.username }}</p>
+                <p>Dui id ornare arcu odio ut sem. Vitae justo eget magna fermentum iaculis. 
+                    Vel facilisis volutpat est velit egestas dui. Quam quisque id diam vel quam elementum. 
+                    Viverra nam libero justo laoreet sit amet cursus sit amet. Interdum varius sit amet mattis vulputate. 
+                    Justo eget magna fermentum iaculis. Duis tristique sollicitudin nibh sit amet commodo nulla facilisi. 
+                </p>
+
+                <div id="social-media-accounts">
+                    <a href="#" class="social-media-link">FACEBOOK</a>
+                    <a href="#" class="social-media-link">INSTAGRAM</a>
+                    <a href="#" class="social-media-link">TWITTER</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="comments">
+        <h2 id="comments-title">{{ post.comments.count }} Commetns</h2>
+
+        <div>
+            {% for comment in post.comments.all %}
+
+                {% comment %} check if comment is reply comment or not {% endcomment %}
+                {% if not comment.replyed_comment %}
+                    <div class="comment">
+                        {% if comment.owner %}
+                            <img src="{{ comment.owner.profile_photo.url }}" alt="" class="comment-profile-photo">
+                        {% else %}
+                            <img src="{% static 'Main/img/anonymous.svg' %}" alt="" class="comment-profile-photo">
+                        {% endif %}
+
+                        <div>
+                            <h3 class="comment-username">
+                                {% if comment.owner %}
+                                    {{ comment.owner.username }}
+                                {% else %}
+                                    {{ comment.anonymous_name }}
+                                {% endif %}
+                            </h3>
+                            <p class="comment-date">{{ comment.date }} <span class="reply-to-comment">Reply</span></p>
+                            <p class="comment-content">{{ comment.content }}</p>
+                        </div>
+                        
+                    </div>
+                {% endif %}
+
+                {% if comment.replys %}
+                    {% for reply in comment.replys.all %}
+                        <div class="comment reply">
+                            <img src="{{ reply.owner.profile_photo.url }}" alt="" class="comment-profile-photo">
+
+                            <div>
+                                <h3 class="comment-username">
+                                    {% if reply.owner %}
+                                        {{ reply.owner.username }}
+                                    {% else %}
+                                        {{ reply.anonymous_name }}
+                                    {% endif %}
+                                </h3>
+                                <p class="comment-date">{{ reply.date }} <span class="reply-to-comment">Reply</span></p>
+                                <p class="comment-content">{{ reply.content }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+            {% endfor %}
+        </div>
+
+        <form id="comment-form">
+            <h2>Make Comment</h2>
+            <input type="text" placeholder="Your Name" name="name">
+            <!-- <p class="error">You are not logged in, give your name to be able to make anonymous comment</p> -->
+            <textarea name="content" placeholder="Your Comment"></textarea>
+            <!-- <p class="error">You have to write something</p> -->
+
+            <button type="submit">SUBMIT</button>
+        </form>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    // Servers Base Url
+    const BASE_URL = location.origin;
+
+    const POST_SLUG = "{{post.slug}}";
+    const IS_AUTHENTICATED = "{{request.user.is_authenticated}}" == "True" ? true : false;
+    const PROFILE_PHOTO_URL = BASE_URL + "{{ request.user.profile_photo.url }}";
+    const USERNAME = "{{ requrest.use.username }}";
+</script>
+<script src="{% static 'Main/js/post_detail.js' %}"></script>
+{% endblock %}

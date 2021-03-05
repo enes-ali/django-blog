@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" href="{% static 'Account/css/login.css' %}">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+
+    <body>
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            
+            <div id="left-container">
+                <img src="{% static 'Account/img/signin-image.jpg' %}" alt="" id="photo">
+                <a id="signup" href="{% url 'register' %}">Create an account</a>
+            </div>
+
+            <div id="right-container">
+                <h1 id="form-title">Sign In</h1>
+                <div id="form-inputs">
+                    <div class="input-container">
+                        <i class="material-icons md-18">person</i>
+                        <input type="email" name="email" placeholder="Email", required>
+                    </div>
+
+                    <div class="input-container">
+                        <i class="material-icons">lock</i>
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    
+                    <input type="checkbox" name="remember" id="remember" >
+                    <label for="remember">Remember Me</label>
+                </div>
+                <button type="submit" id="submit">Sign in</button>
+
+                <div id="error-container">
+                    {% if errors %}
+                        {% for error in errors %}
+                            <div class="error">{{error}}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+            </div>
+        </form>
+    </body>
+</html>

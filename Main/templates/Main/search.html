@@ -1,0 +1,44 @@
+{% extends "Main/base.html"%}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'Main/css/search.css' %}">
+{% endblock %}
+
+{% block body %}
+
+<div id="search-posts-container" class="flex-col centered">
+    {% for post in posts %}
+    <div class="search-post flex-row align-center">
+        <div class="flex-row">
+            <a href="" class="cover-photo-link flex-row centered">
+                <img src="{{ post.cover_photo.url }}" alt="{{ post.title }}" class="search-post-cover">
+            </a>
+            
+            <div class="flex-col space-between full-width">
+                <div class="flex-col">
+                    <a href="{% url 'post_detail' slug=post.slug %}" class="search-post-title link-inherit">{{ post.title }}</a>
+                    <p class="label category-{{ post.category }} flex-col centered">{{ post.category }}</p>
+                </div>
+                
+                <div class="flex-row space-between">
+                    <div class="flex-row centered">
+                        <img src="{{ post.owner.profile_photo.url }}" alt="{{ post.owner.username }}" class="search-post-owner-photo circle">
+                        <p class="search-post-owner-username">{{ post.owner.username }}</p>
+                    </div>
+
+                    <div class="flex-row">
+                        <p class="search-post-likes"><span>{{post.likes.count}}</span> Likes</p>
+                        <p class="search-post-upload-date">{{ post.upload_date }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

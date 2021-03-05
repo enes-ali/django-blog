@@ -1,0 +1,75 @@
+{% extends "Main/base.html" %}
+{% load static %}
+
+{% block title %}Welocme{% endblock %}
+
+{% block head %} 
+    <link rel="stylesheet" href="{% static 'Main/css/home.css' %}">
+{% endblock %}
+
+{% block body %}
+
+    <div id="showcase">
+        <div id="showcase-overlay-color">
+            {% for post in showcase_posts %}
+                <div class="showcase-post" id="showcase-{{forloop.counter}}" style="background-image: url({{post.cover_photo.url}});">
+                    <div class="showcase-post-overlay">
+                        <p class="showcase-post-category category-{{ post.category }}">{{post.get_category_display}}</p>
+                        <a href="{% url 'post_detail' slug=post.slug %}" class="showcase-post-title">{{post.title}}</a>
+
+                        <div class="showcase-post-info">
+                            {% if forloop.counter == 1 %}
+                                <img src="{{post.owner.profile_photo.url}}" alt="" class="showcase-post-profile-photo">
+                            {% endif %}
+                            <p>{{ post.owner.username }} &middot; {{ post.upload_date }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div id="posts-container">
+        {% for post in posts %}
+            <div class="post">
+                <a href="{% url 'post_detail' slug=post.slug %}" class="post-image"><img src="{{ post.cover_photo.url }}" alt="" class="post-cover-photo"></a>
+
+                <div class="post-content">
+                    <a href="{% url 'post_detail' slug=post.slug %}" class="post-upload-date">{{ post.upload_date }}</a>
+                    <a href="{% url 'post_detail' slug=post.slug %}" class="post-title">{{ post.title }}</a>
+                    <p class="post-text-preview">{{ post.summary }}...</p>
+                    <a href="#" href="" class="post-category">{{ post.get_category_display }}</a>
+                </div>
+            </div>
+        {% endfor %}
+
+            <div id="pagination">
+                {% if posts.has_previous %}
+                <a href="{% url 'home' %}?page={{ posts.previous_page_number }}" class="pagination-button" id="previous-button">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+
+                <a href="{% url 'home' %}?page={{ posts.previous_page_number }}" class="page-number">{{ posts.previous_page_number }}</a>
+                {% endif %}
+
+                <div class="page-number current-page-number">{{ posts.number }}</div>
+                {% if posts.has_next %}
+                    <a  href="{% url 'home' %}?page={{ posts.next_page_number }}" class="page-number">{{ posts.next_page_number }}</a>
+                {% endif %}
+                <div class="page-number">...</div>
+                <a href="{% url 'home' %}?page={{ posts.paginator.num_pages }}" class="page-number">{{ posts.paginator.num_pages }}</a>
+
+                {% if posts.has_next %}
+                <a href="{% url 'home' %}?page={{ posts.next_page_number }}" class="pagination-button" id="previous-button">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                {% endif %}
+
+            </div>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

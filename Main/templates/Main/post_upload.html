@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+
+    <head>
+        <title>Upload Post</title>
+    </head>
+
+    <body>
+        <form action="{% url 'upload' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.media}}
+            {{form.as_p}}
+            <button type="submit">Upload</button>
+        </form>
+        {% if errors %}
+            {# {% for error in errors %} #}
+                <p>{{errors}}</p>
+            {# {% endfor %} #}
+        {% endif %}
+    </body>
+
+</html>

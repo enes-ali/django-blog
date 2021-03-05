@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'Main/css/base.css' %}">
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/32bea0e5ac.js" crossorigin="anonymous"></script>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega&display=swap" rel="stylesheet">
+        {% block head %}{% endblock %}
+    </head>
+
+    <body>
+        <header>
+            <div id="header-container">
+                <div id="header-content">
+                    <div>
+                        <a href="https://www.instagram.com" target="blank" class="fab fa-instagram social-media-icon"></a>
+                        <a href="https://www.facebook.com" target="blank" class="fab fa-facebook-f social-media-icon"></a>
+                        <a href="https://www.twitter.com" target="blank" class="fab fa-twitter social-media-icon"></a>
+                        <a href="https://www.pinterest.com" target="blank" class="fab fa-pinterest social-media-icon"></a>
+                    </div>
+
+                    <a id="brand" href="{% url 'home' %}">Blog</a>
+
+                    <div id="open-search">
+                        <span>SEARCH</span>
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+
+                <nav>
+                    <ul id="nav-list">
+                        <li class="nav-link"> <a href="#" class="link-inherit">Home </a> </li>
+
+                        <li class="nav-link nav-dropdown-link">
+                            Categories
+                            <i class="fas fa-chevron-down"></i>
+                            <div class="nav-dropdown">
+                                <ul class="dropdown-list">
+                                    <li class="dropdown-list-item">
+                                        <a href="{% url 'home' %}?category=tech" class="link-inherit">Tech</a>
+                                    </li>
+                                    <li class="dropdown-list-item">
+                                        <a href="{% url 'home' %}?category=life" class="link-inherit">Life</a>
+                                    </li>
+                                    <li class="dropdown-list-item">
+                                        <a href="{% url 'home' %}?category=health" class="link-inherit">Healt</a>
+                                    </li>
+                                    <li class="dropdown-list-item">
+                                        <a href="{% url 'home' %}?category=food" class="link-inherit">Food</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <!-- <li class="nav-link nav-dropdown-link">
+                            Blogs
+                            <i class="fas fa-chevron-down"></i>
+                            <div class="nav-dropdown">
+                                <ul class="dropdown-list">
+                                    <li class="dropdown-list-item"><a href="#" class="link-inherit">Tech</a></li>
+                                    <li class="dropdown-list-item"><a href="#" class="link-inherit">Life</a></li>
+                                    <li class="dropdown-list-item"><a href="#" class="link-inherit">Healt</a></li>
+                                    <li class="dropdown-list-item"><a href="#" class="link-inherit">Food</a></li>
+                                </ul>
+                            </div>
+                        </li> -->
+
+                        <li class="nav-link"><a href="#" class="link-inherit">About</a></li>
+                        <li class="nav-link"><a href="#" class="link-inherit">Contact Us</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+        </header>
+
+        <div id="search-overlay" class="overlay">
+            <i class="fas fa-times" id="close-search"></i>
+
+            <div id="search-container">
+                <p id="search-title">Search For</p>
+                <form action="{% url 'search' %}" id="search-form" method="GET">
+                    <input type="text" name="query" id="search-input" placeholder="Type">
+                </form>
+                <p id="search-info">Press Enter To Search</p>
+            </div>
+
+        </div>
+
+        <div class="scroll-top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+
+        {% block body %}
+        {% endblock %}
+
+        <div id="extra-info">
+            <!-- Popular Posts-->
+            <div id="extra-info-left">
+                <h2 id="popular-posts-title">Popular Posts</h2>
+    
+                <div id="popular-posts-container">
+                    {% for post in popular_posts %}
+                        <div class="popular-post">
+                            <a class="popular-post-cover" href="{% url 'post_detail' slug=post.slug %}"><img src="{{ post.cover_photo.url }}" alt=""></a>
+    
+                            <div>
+                                <a href="{% url 'post_detail' slug=post.slug %}" class="popular-post-title">{{ post.title }}</a>
+    
+                                <p class="popular-post-info">By <a href="#" class="popular-post-owner" style="text-decoration: none;">{{ post.owner.username }}</a> on {{ post.upload_date }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+    
+            <!-- About -->
+            <div id="extra-info-right">
+                <h2 id="about-title">About Blog</h2>
+                <p id="about-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Donec et odio pellentesque diam volutpat commodo sed egestas. Lacinia at quis risus sed vulputate odio ut. 
+                    Nullam eget felis eget nunc lobortis mattis aliquam faucibus purus. Pellentesque sit amet porttitor eget 
+                    dolor morbi non arcu risus. Sagittis eu volutpat odio facilisis mauris sit amet.
+                </p>
+    
+                
+                <div>
+                    <a href="https://www.instagram.com" target="blank" class="fab fa-instagram social-media-icon"></a>
+                    <a href="https://www.facebook.com" target="blank" class="fab fa-facebook-f social-media-icon"></a>
+                    <a href="https://www.twitter.com" target="blank" class="fab fa-twitter social-media-icon"></a>
+                    <a href="https://www.pinterest.com" target="blank" class="fab fa-pinterest social-media-icon"></a>
+                </div>
+            </div>
+    
+        </div>
+        
+        <!-- Footer -->
+        <footer>
+            <div>
+                <div id="footer-links-container">
+                    <div class="footer-link-group">
+                        <p class="footer-link-group-name">QUICK LINKS</p>
+    
+                        <a href="#" class="footer-link link-inherit">Home</a>
+                        <a href="#" class="footer-link link-inherit">Blog</a>
+                        <a href="#" class="footer-link link-inherit">Styles</a>
+                        <a href="#" class="footer-link link-inherit">About</a>
+                        <a href="#" class="footer-link link-inherit">Contact</a>
+                        <a href="#" class="footer-link link-inherit">Privacy Policy</a>
+                    </div>
+    
+                    <div class="footer-link-group">
+                        <p class="footer-link-group-name">ARCHIVES</p>
+    
+                        <a href="#" class="footer-link link-inherit">January 2021</a>
+                        <a href="#" class="footer-link link-inherit">December 2020</a>
+                        <a href="#" class="footer-link link-inherit">November 2020</a>
+                        <a href="#" class="footer-link link-inherit">October 2020</a>
+                        <a href="#" class="footer-link link-inherit">September 2020</a>
+                        <a href="#" class="footer-link link-inherit">August 2020</a>
+                    </div>
+    
+                    <div class="footer-link-group">
+                        <p class="footer-link-group-name">SOCIAL</p>
+    
+                        <a href="#" class="footer-link link-inherit">Facebook</a>
+                        <a href="#" class="footer-link link-inherit">Instagram</a>
+                        <a href="#" class="footer-link link-inherit">Twitter</a>
+                        <a href="#" class="footer-link link-inherit">Pinterest</a>
+                        <a href="#" class="footer-link link-inherit">Google+</a>
+                        <a href="#" class="footer-link link-inherit">LinkedIn</a>
+                    </div>
+                </div>
+                
+                <p id="copyright">© Copyright Enes 2021</p>
+            </div>
+    
+            <div id="get-emails-container">
+                <p class="footer-link-group-name">GET EMAILS</p>
+    
+                <p id="get-emails-text">Pellentesque sit amet porttitor eget dolor morbi non arcu risus. Sagittis eu volutpat odio facilisis mauris sit amet.</p>
+                
+                <form id="get-email-form">
+                    <i class="far fa-envelope"></i>
+                    <input type="text" placeholder="Email Address">
+                    <button type="submit">SEND</button>
+                </form>
+            </div>
+    
+        </footer>
+    </body>
+
+    {% block script %}
+    {% endblock %}
+    <script src="{% static 'Main/js/base.js' %}"></script>
+</html>

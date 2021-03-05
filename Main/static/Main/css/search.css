@@ -1,0 +1,51 @@
+.search-post{
+    width: 70%;
+    height: 250px;
+    overflow: hidden;
+    font-family: 'Lato', sans-serif;
+    margin: 25px 0;
+    border-bottom: solid 1px gray;
+}
+
+.cover-photo-link{
+    width: 50%;
+    height: 230px;
+    margin-right: 25px;
+    object-position: center;
+    object-fit: cover;
+}
+
+.search-post-cover{
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+}
+
+.search-post-title{
+    font-size: 25px;
+    margin-bottom: 10px;
+    height: fit-content;
+    font-weight: bold;
+}
+
+.search-post-owner-photo{
+    margin-right: 7px;
+    width: 40px;
+    height: 40px;
+}
+
+.search-post-owner-username{
+    font-weight: bold;
+    margin-right: 25px;
+    font-size: 16px;
+}
+
+.search-post-likes > span{
+    font-weight: bold;
+}
+
+.search-post-upload-date{
+    font-size: 16px;
+    margin-left: 10px;
+}
